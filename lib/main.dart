@@ -4,11 +4,14 @@ import 'package:contact_diary_aaplication/utils/color_utils.dart';
 import 'package:contact_diary_aaplication/views/screens/HomePage.dart';
 import 'package:contact_diary_aaplication/views/screens/Splash_Screen.dart';
 import 'package:contact_diary_aaplication/views/screens/add_contact.dart';
+import 'package:contact_diary_aaplication/views/screens/Edit_Page.dart';
+import 'package:contact_diary_aaplication/views/screens/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'controller/Contact_Controller.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,9 +43,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         appBarTheme: AppBarTheme(
-          centerTitle: true,
-          // foregroundColor: Colors.white,
-        ),
+            // centerTitle: true,
+            // foregroundColor: Colors.white,
+            ),
         textTheme: TextTheme(
           bodyMedium: TextStyle(
             fontSize: 18,
@@ -60,9 +63,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: theme_green,
         ),
         appBarTheme: AppBarTheme(
-          centerTitle: true,
-          // foregroundColor: Colors.white,
-        ),
+            // centerTitle: true,
+            // foregroundColor: Colors.white,
+            ),
         snackBarTheme: SnackBarThemeData(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -88,6 +91,8 @@ class MyApp extends StatelessWidget {
         MyRoutes.home: (context) => HomePage(),
         MyRoutes.Splash_Screen: (context) => Splash_Screen(),
         MyRoutes.AddContact: (context) => AddContact(),
+        MyRoutes.Info_Page: (context) => Information_Page(),
+        MyRoutes.Detail_Page: (context) => Detail_Page(),
       },
     );
   }
