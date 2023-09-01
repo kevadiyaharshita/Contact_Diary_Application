@@ -24,7 +24,7 @@ class ContactController extends ChangeNotifier {
         Last_Name: SP_Contacs[1],
         Email: SP_Contacs[3],
         Phone: SP_Contacs[2],
-        // image: SP_Contacs[4],
+        image: SP_Contacs[4],
       );
 
       _allContacts.add(cm);
@@ -38,7 +38,7 @@ class ContactController extends ChangeNotifier {
     SP_Contacs.add(contact.Last_Name);
     SP_Contacs.add(contact.Phone);
     SP_Contacs.add(contact.Email);
-    // SP_Contacs.add(contact.image);
+    SP_Contacs.add(contact.image);
 
     return SP_Contacs;
   }

@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:contact_diary_aaplication/controller/Contact_Controller.dart';
 import 'package:contact_diary_aaplication/modal/Contact_Modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/Theme_Controller.dart';
 
 class Information_Page extends StatelessWidget {
   Information_Page({super.key});
+
+  // String imagePath = "";
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +43,7 @@ class Information_Page extends StatelessWidget {
               Provider.of<ContactController>(context, listen: false)
                   .editContact(contact: cm, index: index);
               print("Done ${cm.First_Name}");
+              print("image : ${cm.image}");
               Navigator.of(context).pop();
             },
             icon: Icon(
@@ -53,25 +60,35 @@ class Information_Page extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xff9397A3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 5,
-                        offset: Offset(2, 2),
-                      )
-                    ],
-                  ),
-                  child: Icon(
-                    CupertinoIcons.person_solid,
-                    color: Colors.white,
-                    size: 180,
-                  ),
-                ),
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: (cm.image != "")
+                          ? DecorationImage(
+                              image: FileImage(File(cm.image)),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                      shape: BoxShape.circle,
+                      color: Color(0xff9397A3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 5,
+                          offset: Offset(2, 2),
+                        )
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: (cm.image == "")
+                        ? Text(
+                            "${cm.First_Name[0].toUpperCase()}${cm.Last_Name[0].toUpperCase()}",
+                            style: TextStyle(
+                                fontSize: 60,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        : null),
                 SizedBox(
                   height: 15,
                 ),
@@ -80,22 +97,57 @@ class Information_Page extends StatelessWidget {
                     "Add Photo",
                     style: TextStyle(color: Colors.blueAccent, fontSize: 18),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    ImagePicker picker = ImagePicker();
+                    XFile? file;
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Pick Image"),
+                        // backgroundColor: Six_Blue,
+
+                        content: Text("Choose the sourse for your image"),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              file = await picker.pickImage(
+                                  source: ImageSource.camera);
+
+                              if (file != null) {
+                                image = File(file!.path);
+                                cm.image = file!.path;
+                              }
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Camera",
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              file = await picker.pickImage(
+                                  source: ImageSource.gallery);
+
+                              if (file != null) {
+                                image = File(file!.path);
+                                cm.image = file!.path;
+                              }
+
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Gallary"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Container(
                   width: w,
-                  // decoration: BoxDecoration(
-                  //   color: Provider.of<Theme_Controller>(context).getTheme
-                  //       ? Color(0xff313131)
-                  //       : Colors.white,
-                  //   border: Border(
-                  //     bottom: BorderSide(width: 0.5, color: border_Color),
-                  //     top: BorderSide(width: 0.5, color: border_Color),
-                  //   ),
-                  // ),
                   child: Form(
                     child: Column(
                       children: [

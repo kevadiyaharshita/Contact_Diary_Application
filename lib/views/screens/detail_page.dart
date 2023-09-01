@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contact_diary_aaplication/controller/Theme_Controller.dart';
 import 'package:contact_diary_aaplication/utils/MyRoutes.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,10 +84,29 @@ class Detail_Page extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
+              // CircleAvatar(
+              //     radius: 80,
+              //     foregroundImage:
+              //         (cm.image != "") ? FileImage(File(cm.image)) : null,
+              //     child: (cm.image == "")
+              //         ? Text(
+              //             "${cm.First_Name[0].toUpperCase()}${cm.Last_Name[0].toUpperCase()}",
+              //             style: TextStyle(
+              //                 fontSize: 60,
+              //                 fontWeight: FontWeight.bold,
+              //                 color: Colors.white),
+              //           )
+              //         : null),
               Container(
                   width: 150,
                   height: 150,
                   decoration: BoxDecoration(
+                    image: (cm.image != "")
+                        ? DecorationImage(
+                            image: FileImage(File(cm.image)),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                     shape: BoxShape.circle,
                     color: Color(0xff9397A3),
                     boxShadow: [
@@ -97,13 +118,15 @@ class Detail_Page extends StatelessWidget {
                     ],
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    "${cm.First_Name[0].toUpperCase()}${cm.Last_Name[0].toUpperCase()}",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  )),
+                  child: (cm.image == "")
+                      ? Text(
+                          "${cm.First_Name[0].toUpperCase()}${cm.Last_Name[0].toUpperCase()}",
+                          style: TextStyle(
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : null),
               SizedBox(
                 height: 10,
               ),

@@ -14,11 +14,11 @@ import '../../controller/Theme_Controller.dart';
 
 class AddContact extends StatelessWidget {
   AddContact({super.key});
-  String first_name = "";
-  String last_name = "";
+  String firstName = "";
+  String lastName = "";
   String phone = "";
   String email = "";
-  String Image = "";
+  String imagePath = "";
   File? image;
 
   @override
@@ -39,11 +39,11 @@ class AddContact extends StatelessWidget {
             IconButton(
               onPressed: () {
                 Contact_Modal c = Contact_Modal(
-                  First_Name: first_name,
-                  Last_Name: last_name,
+                  First_Name: firstName,
+                  Last_Name: lastName,
                   Email: email,
                   Phone: phone,
-                  // image: Image,
+                  image: imagePath,
                 );
 
                 bool check =
@@ -74,26 +74,33 @@ class AddContact extends StatelessWidget {
                   height: 16,
                 ),
                 Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xff9397A3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 5,
-                          offset: Offset(2, 2),
-                        )
-                      ],
-                    ),
-                    child: (Image == "")
-                        ? Icon(
-                            CupertinoIcons.person_solid,
-                            color: Colors.white,
-                            size: 180,
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: (imagePath != "")
+                        ? DecorationImage(
+                            image: FileImage(File(imagePath)),
+                            fit: BoxFit.cover,
                           )
-                        : null),
+                        : null,
+                    shape: BoxShape.circle,
+                    color: Color(0xff9397A3),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5,
+                        offset: Offset(2, 2),
+                      )
+                    ],
+                  ),
+                  child: (imagePath == "")
+                      ? Icon(
+                          CupertinoIcons.person_solid,
+                          color: Colors.white,
+                          size: 180,
+                        )
+                      : null,
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -117,8 +124,7 @@ class AddContact extends StatelessWidget {
 
                               if (file != null) {
                                 image = File(file!.path);
-                                Uint8List? _bytes = await image?.readAsBytes();
-                                Image = base64.encode(_bytes!);
+                                imagePath = file!.path;
                               }
                               Navigator.of(context).pop();
                             },
@@ -133,8 +139,7 @@ class AddContact extends StatelessWidget {
 
                               if (file != null) {
                                 image = File(file!.path);
-                                Uint8List? _bytes = await image?.readAsBytes();
-                                Image = base64.encode(_bytes!);
+                                imagePath = file!.path;
                               }
 
                               Navigator.of(context).pop();
@@ -175,7 +180,7 @@ class AddContact extends StatelessWidget {
                               keyboardType: TextInputType.name,
                               textInputAction: TextInputAction.next,
                               onChanged: (val) {
-                                first_name = val;
+                                firstName = val;
                               },
                               decoration: InputDecoration(
                                 hintText: "First Name",
@@ -206,7 +211,7 @@ class AddContact extends StatelessWidget {
                               keyboardType: TextInputType.name,
                               textInputAction: TextInputAction.next,
                               onChanged: (val) {
-                                last_name = val.toString();
+                                lastName = val.toString();
                               },
                               decoration: InputDecoration(
                                 hintText: "Last Name",

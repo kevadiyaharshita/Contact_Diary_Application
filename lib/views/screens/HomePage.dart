@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:contact_diary_aaplication/controller/Contact_Controller.dart';
 import 'package:contact_diary_aaplication/controller/Theme_Controller.dart';
@@ -64,7 +65,19 @@ class HomePage extends StatelessWidget {
                         : ListTile(
                             leading: CircleAvatar(
                               radius: 25,
-                              backgroundColor: Colors.red,
+                              backgroundColor: Colors.primaries[index],
+                              foregroundImage: (c_m.image != "")
+                                  ? FileImage(File(c_m.image))
+                                  : null,
+                              child: (c_m.image == "")
+                                  ? Text(
+                                      "${c_m.First_Name[0].toUpperCase()}${c_m.Last_Name[0].toUpperCase()}",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )
+                                  : null,
                             ),
                             title: Text("${c_m.First_Name}"),
                             subtitle: Text(c_m.Phone),
